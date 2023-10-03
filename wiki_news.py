@@ -4,9 +4,10 @@ import requests
 
 #website page to be scrapped
 url = "https://wiki.debian.org/News"
-# request_info from webpage
+# read webpage
 req = requests.get(url)
+#Parse data
 soup = BeautifulSoup(req.content, "html.parser")
 
-print(soup.prettify)
+print(soup.prettify())
 
