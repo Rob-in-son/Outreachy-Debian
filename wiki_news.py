@@ -1,5 +1,7 @@
-import requests
+#A script to read data from the News page on Debianwiki, parse the data and write it to a file in markdown
 from bs4 import BeautifulSoup
+import requests
+from markdownify import markdownify as md
 
 # URL of the page to be scraped
 url = "https://wiki.debian.org/News"
@@ -17,8 +19,13 @@ soup = BeautifulSoup(response.text, 'html.parser')
 # Function to convert parsed HTML to markdown
 def html_to_markdown(soup):
     markdown_output = ""
-    headers = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']) 
+    headers = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+    anchor_tags = soup.find_all('a')
 
+    # Iterate through each anchor tag and replace it with the Markdown link
+    for anchor in anchor_tags:
+        markdown_link = md(str(anchor))
+        anchor.replace_with(markdown_link)
 
     for header in headers:
         # Create markdown headers
@@ -30,8 +37,7 @@ def html_to_markdown(soup):
             if sibling.name and "h" in sibling.name:
                 break
             markdown_output += sibling.get_text() + "\n\n"
-
-
+    
     return markdown_output
 
 
@@ -46,3 +52,4 @@ with open(output_file_name, 'w', encoding='utf-8') as file:
 
 
 print(f"The content has been written to {output_file_name}")
+
