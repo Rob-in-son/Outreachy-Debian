@@ -21,11 +21,22 @@ def html_to_markdown(soup):
     markdown_output = ""
     headers = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
     anchor_tags = soup.find_all('a')
+    img_tags = soup.find_all('img')
+    processed_elements = set()  # Keep track of processed elements
 
     # Iterate through each anchor tag and replace it with the Markdown link
     for anchor in anchor_tags:
         markdown_link = md(str(anchor))
         anchor.replace_with(markdown_link)
+
+    for img in img_tags:
+        # Convert img tag to Markdown
+        markdown_img = md(str(img))
+        
+        # Check if this image has already been processed
+        if markdown_img not in processed_elements:
+            markdown_output += markdown_img + "\n\n"
+            processed_elements.add(markdown_img)
 
     for header in headers:
         # Create markdown headers

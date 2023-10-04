@@ -1,3 +1,5 @@
+![Debian](https://www.debian.org/Pics/openlogo-50.png)
+
 # 
 
 [News](/News)
