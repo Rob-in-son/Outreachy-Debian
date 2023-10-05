@@ -30,7 +30,7 @@ def html_to_markdown(soup):
         markdown_link = md(str(anchor))
         anchor.replace_with(markdown_link)
 
-        # Iterate through each anchor tag and replace it with the Markdown link
+        # Iterate through each list tag and replace it with the Markdown list
     for list in list_tags:
         markdown_list = md(str(list))
         list.replace_with(markdown_list)
