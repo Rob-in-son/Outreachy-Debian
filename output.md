@@ -39,7 +39,9 @@ var search\_hint = "Search";
 ---
 
  Debian has several news feeds, that can be interesting for different **audiences**, depending on how they use Debian: 
-General news
+
+
+## General news
 ------------
 
 
