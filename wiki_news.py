@@ -9,6 +9,7 @@ NEWS_URL = urljoin(BASE_URL, "News")
 OUTPUT_FILE = "output.md"
 # The div text to be excluded from the HTML
 exclude_div_text = "More Actions:"
+target_text = "Debian has several news feeds, that can be interesting fordifferent audiences, depending on how they use Debian:"
 
 def fetch_html(url):
     try:
@@ -32,6 +33,14 @@ def remove_div(soup, exclude_div_text):
         if exclude_div_text in div.get_text():
             div.extract()
 
+def extract_target_line(soup, target_text):
+    # Extract the target line
+    target_line_tag = soup.find(string=target_text)
+    target_line_text = ""
+    if target_line_tag:
+        target_line_text = target_line_tag.string + "\n\n"
+        target_line_tag.extract()
+
 def write_to_file(content, file_name):
     try:
         with open(file_name, 'w', encoding='utf-8') as file:
@@ -44,17 +53,10 @@ def main():
     html_content = fetch_html(NEWS_URL)
     if html_content:
         soup = BeautifulSoup(html_content, 'html.parser')
-        
-        # Extract the target line
-        target_line_tag = soup.find(string="Debian has several news feeds, that can be interesting for different audiences, depending on how they use Debian:")
-        target_line_text = ""
-        if target_line_tag:
-            target_line_text = target_line_tag.string + "\n\n"
-            target_line_tag.extract()
 
         correct_relative_links(soup)
         remove_div(soup, exclude_div_text)
-        
+        extract_target_line(soup, target_text)
         markdown_content = convert_html_to_markdown(soup)
 
         # Adjust the desired markdown format for "General news"
