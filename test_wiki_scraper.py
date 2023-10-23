@@ -17,8 +17,8 @@ class TestWebScraperFunctions(unittest.TestCase):
         self.assertEqual(result, '<html></html>')
 
     @patch('requests.get')
+    # Test handling a failure in HTML fetch
     def test_fetch_html_failure(self, mock_get):
-        # Test handling a failure in HTML fetch
         mock_get.side_effect = requests.RequestException
         result = fetch_html('http://test.com')
         self.assertIsNone(result)
