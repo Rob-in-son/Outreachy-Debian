@@ -1,0 +1,39 @@
+name: Wiki Scraper tests
+
+on: 
+    pull_request:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9' # or another specific Python version
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Run tests
+      run: |
+        python -m unittest test_wiki_scraper.py
+    - name: Handle test failure
+      if: failure()
+      run: |
+        echo "Tests failed. Check the logs for more information."g
+
+
+
+
+
+
+
+
+
+

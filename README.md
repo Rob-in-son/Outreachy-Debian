@@ -37,7 +37,7 @@ pip install -r requirements.txt
 After setting up the environment and installing the dependencies, you can run the script using the following command:
 
 ```
-python wiki_news.py
+python wiki_scraper.py
 ```
 
 This command will execute the script, scrape the latest news from the Debian News webpage, convert it to markdown, and write it to the file output.md

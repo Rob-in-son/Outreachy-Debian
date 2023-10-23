@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, Mock
 import requests
 from bs4 import BeautifulSoup
-from wiki_news import *  
+from wiki_scraper import *  
 class TestWebScraperFunctions(unittest.TestCase):
 
     @patch('requests.get')
